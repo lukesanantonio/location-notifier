@@ -3,6 +3,7 @@ package net.redcrane.location_notify
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.widget.SeekBar
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 
@@ -25,6 +26,19 @@ class AddLocationActivity : AppCompatActivity(), OnMapReadyCallback {
         setSupportActionBar(toolbar)
 
         (map as SupportMapFragment).getMapAsync(this);
+
+        radiusSeekBar.setOnSeekBarChangeListener(
+                object : SeekBar.OnSeekBarChangeListener {
+                    override fun onProgressChanged(self: SeekBar?, newRadius: Int, fromUser: Boolean) {
+                        circle?.let { it.radius = newRadius.toDouble() }
+                    }
+
+                    override fun onStartTrackingTouch(self: SeekBar?) {
+                    }
+
+                    override fun onStopTrackingTouch(self: SeekBar?) {
+                    }
+                })
     }
 
     override fun onMapReady(map: GoogleMap) {
