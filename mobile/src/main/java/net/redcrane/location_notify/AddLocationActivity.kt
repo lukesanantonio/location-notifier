@@ -25,7 +25,7 @@ class AddLocationActivity : AppCompatActivity(), OnMapReadyCallback {
         setContentView(R.layout.activity_add_location)
         setSupportActionBar(toolbar)
 
-        (map as SupportMapFragment).getMapAsync(this);
+        (map as SupportMapFragment).getMapAsync(this)
 
         radiusSeekBar.setOnSeekBarChangeListener(
                 object : SeekBar.OnSeekBarChangeListener {
@@ -45,16 +45,16 @@ class AddLocationActivity : AppCompatActivity(), OnMapReadyCallback {
         map.setOnMapClickListener {
             if(marker == null || circle == null) {
                 marker = map.addMarker(MarkerOptions()
-                        .position(it));
+                        .position(it))
 
                 circle = map.addCircle(CircleOptions()
                         .center(it)
                         .radius(1000.0)
                         .strokeWidth(5.0f)
-                        .fillColor(Color.argb(0x55, 0x6A, 0xD9, 0xB3)));
+                        .fillColor(Color.argb(0x55, 0x6A, 0xD9, 0xB3)))
             } else {
-                marker!!.position = it;
-                circle!!.center = it;
+                marker!!.position = it
+                circle!!.center = it
             }
         }
     }
