@@ -53,11 +53,19 @@
 
                 <SeekBar
                     android:id="@+id/radiusSeekBar"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:max="16094"
                     android:min="55"
-                    android:progress="8047"/>
+                    android:progress="8046" />
+
+                <TextView
+                    android:id="@+id/miles_view"
+                    android:layout_width="75dp"
+                    android:layout_height="wrap_content"
+                    android:text="10.00 Miles"
+                    android:textAlignment="textEnd" />
             </LinearLayout>
 
         </LinearLayout>

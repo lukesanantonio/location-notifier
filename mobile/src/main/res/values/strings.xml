@@ -2,4 +2,5 @@
     <string name="app_name">Location-Notify</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_add_location">AddLocationActivity</string>
+    <string name="miles_indicator">%1$.2f Miles</string>
 </resources>
