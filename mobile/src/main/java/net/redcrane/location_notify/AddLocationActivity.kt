@@ -3,10 +3,16 @@ package net.redcrane.location_notify
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.widget.SeekBar
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
+
+import com.google.android.gms.common.api.Status
+import com.google.android.gms.location.places.Place
+import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment
+import com.google.android.gms.location.places.ui.PlaceSelectionListener
 
 import kotlinx.android.synthetic.main.activity_add_location.*
 import kotlinx.android.synthetic.main.content_add_location.*
@@ -81,24 +87,44 @@ class AddLocationActivity : AppCompatActivity(), OnMapReadyCallback {
                     }
                 }
         )
-    }
+        (getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment) as PlaceAutocompleteFragment).setOnPlaceSelectedListener(
+                object : PlaceSelectionListener {
+                    override fun onPlaceSelected(place: Place?) {
+                        googleMap?.let { map ->
+                            place?.latLng?.let { pt ->
+                                setPin(map, pt)
+                            }
+                        }
+                    }
 
+                    override fun onError(err: Status?) {
+                        Log.e("LOCATION-NOTIFIER", "An error occurred: " + err);
+                    }
+                }
+        )
+    }
+    fun setPin(map: GoogleMap, pt: LatLng) {
+        if(marker == null || circle == null) {
+            marker = map.addMarker(MarkerOptions()
+                    .position(pt))
+
+            circle = map.addCircle(CircleOptions()
+                    .center(pt)
+                    .radius(radiusSeekBar.progress.toDouble())
+                    .strokeWidth(5.0f)
+                    .fillColor(Color.argb(0x55, 0x6A, 0xD9, 0xB3)))
+        } else {
+            marker!!.position = pt
+            circle!!.center = pt
+        }
+
+        updateMilesFromSeekBar()
+        zoomToMarker()
+    }
     override fun onMapReady(map: GoogleMap) {
         this.googleMap = map;
         map.setOnMapClickListener {
-            if(marker == null || circle == null) {
-                marker = map.addMarker(MarkerOptions()
-                        .position(it))
-
-                circle = map.addCircle(CircleOptions()
-                        .center(it)
-                        .radius(radiusSeekBar.progress.toDouble())
-                        .strokeWidth(5.0f)
-                        .fillColor(Color.argb(0x55, 0x6A, 0xD9, 0xB3)))
-            } else {
-                marker!!.position = it
-                circle!!.center = it
-            }
+            setPin(map, it)
         }
     }
 }
