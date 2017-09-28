@@ -48,6 +48,8 @@ class AddLocationActivity : AppCompatActivity(), OnMapReadyCallback {
             // In meters
             val radius = radiusSeekBar.progress.toDouble()
 
+            // TODO: Maybe do some logarithmic scale so this makes more sense in cities? But is this
+            // app even useful in cities?
             val lat = radius / 111111.0
             val long = (radius / 111111.0) * Math.cos(Math.toRadians(lat))
 
