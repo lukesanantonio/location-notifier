@@ -16,8 +16,8 @@ class ActionActivity : AppCompatActivity() {
         setContentView(R.layout.activity_action)
         setSupportActionBar(toolbar)
 
-        fab.setOnClickListener { view ->
-            var intent = Intent(this, AddLocationActivity::class.java)
+        fab.setOnClickListener { _ ->
+            val intent = Intent(this, AddLocationActivity::class.java)
             startActivity(intent)
         }
     }
